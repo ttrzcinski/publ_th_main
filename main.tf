@@ -3,6 +3,16 @@ variable "instance_type" {
   type    = string
 }
 
+variable "subnet" {
+  default = ""
+  type    = string
+}
+
+variable "name" {
+  default = ""
+  type    = string
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
   
@@ -21,7 +31,9 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
+  subnet        = "${var.subnet}"
+  
   tags = {
-    Name = "HelloWorld"
+    Name = "${var.name}"
   }
 }
